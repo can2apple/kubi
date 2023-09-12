@@ -1,0 +1,11 @@
+set(gflags_Found 1)
+set(gflags_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/include")
+set(gflags_INCLUDE_DIR ${gflags_INCLUDE_DIRS})
+IF (CMAKE_BUILD_TYPE STREQUAL Debug)       
+    set(gflags_LIBRARIES  ${CMAKE_CURRENT_LIST_DIR}/lib/gflags_static_debug.lib  )
+    set(gflags_LIBRARY ${gflags_LIBRARIES})
+ELSE()
+    set(gflags_LIBRARIES  ${CMAKE_CURRENT_LIST_DIR}/lib/gflags_static.lib  )  
+    set(gflags_LIBRARY ${gflags_LIBRARIES})                       
+ENDIF()
+

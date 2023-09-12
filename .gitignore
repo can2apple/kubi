@@ -1,0 +1,21 @@
+
+__pycache__
+client/build/
+server/build/
+#unity
+client/unity/build/
+client/unity/Library/
+client/unity/Temp/
+client/unity/Logs/
+client/unity/obj/
+client/unity/.vs/
+client/unity/*.sln
+client/unity/*.csproj
+client/unity/*.sln
+client/unity/*.userprefs
+client/unity/*.unityproj
+client/unity/*.DS_Store
+# VS code 
+.vscode
+# hidden folder for aml configs
+.git

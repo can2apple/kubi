@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>can</title>
+    <script src="./Kubi.js"></script>
+    <script src="./Kubi_client.js"></script>
+</head>
+<body>
+    <img id="show_img"></img>
+</body>
+<script>
+  
+  
+
+
+    function Task(){
+        this.uid=""
+        //#{'task':"what", 'opt':"null",'stage':0}
+        this.task={}
+        this.img_datas=""
+        this.img_datas_des=[]
+        this.img_datas_div = []
+        this.set_task_stage=function(stage){
+                this.task["stage"]=stage
+        }
+        this.set_task_opt=function(opt){
+            this.task["opt"]=opt
+        }
+        this.set_task_task=function(task){
+            this.task["task"]=task
+        }
+
+        this.get_task_stage=function(){
+            return this.task["stage"]
+        }
+        
+        this.get_task_opt=function(){
+            return this.task["opt"]
+        }
+        
+        this.get_task_task=function(){
+            return this.task["task"]
+        }
+        this.empty_data=function(){
+            this.task={}
+            this.img_datas =""
+            this.img_datas_des = []
+            this.img_datas_div = []
+        }
+       this.push_bytes=function(img_datas_8u){
+            this.img_datas_div.push(img_datas_8u);
+            this.img_datas_des.push(img_datas_8u.byteLength);
+            if (this.img_datas.byteLength==0){
+              
+                this.img_datas=img_datas_8u;
+            }
+            else{
+                var len= img_datas_8u.byteLength+this.img_datas.byteLength;
+                var new_b=new Uint8Array(len) ;
+                new_b.set(this.img_datas,0);
+                new_b.set(img_datas_8u,this.img_datas.byteLength);
+                this.img_datas= new_b;
+            }
+       }
+       this.to_json_str=function(){
+            json_tuple={};
+            json_tuple["uid"]=this.uid;
+            json_tuple["task"]=this.task;
+            json_tuple["img_des"]=[];
+            for(var i=0;i<this.img_datas_des.length;i++){
+                json_tuple["img_des"].append(this.img_datas_des[i])
+            }
+            return JSON.stringify(json_tuple)
+       }
+       this.parse_from_json_str=function(json_str,datas_u8arr){
+            this.img_datas=[]
+            json_tuple = JSON.parse(json_str);
+            this.uid= json_tuple["uid"];
+            this.task= json_tuple["task"];
+            this.img_datas_des= json_tuple["img_des"];
+            this.img_datas=datas_u8arr;
+            var ind = 0;
+            for(var i=0;i< this.img_datas_des.length;i++){
+                this.img_datas_div.push(this.img_datas.subarray(ind,this.img_datas_des[i]));
+                ind = ind + this.img_datas_des[i];
+            }
+       }
+
+    }
+    function User(){
+        this.uid="";
+        this.name="";
+        this.role="";
+        this.to_json_str=function(){
+            json_tuple = {};
+            json_tuple["uid"]=this.uid;
+            json_tuple["name"] = this.name;
+            json_tuple["role"] = this.role;
+            return JSON.stringify(json_tuple);
+
+        }
+        this.parse_from_json_str=function(msg){
+            json_tuple = JSON.parse(msg);
+            this.uid = json_tuple["uid"];
+            this.name = json_tuple["name"];
+            this.role = json_tuple["role"];
+        }
+    }
+
+    var ku_client= new Kubi_Client()
+    ku_client.OnEnter(function(){
+        console.log("has enter")
+        var user=new User();
+        user.name="wencan";
+        user.uid="can";
+        user.role="showers"
+        ku_client.Request("_on_login",user.to_json_str(),"",function(node){
+            json_tuple = JSON.parse( node.getDataStr());
+            console.log(json_tuple["code"]);
+            console.log(json_tuple["msg"]);
+            console.log("login do!");
+        })
+        ku_client.OnNotice("on_shower_result",function(node){
+            var task=new Task();
+            task.parse_from_json_str(node.getDataStr(),node.getDataBytes_asU8());
+            document.getElementById("show_img").src = "data:image/jpeg;base64," + Help_Uint8ArrayToBase64(task.img_datas_div[0]);
+        })
+    })
+    ku_client.OnEnd(function(){
+        console.log("has lost");
+        console.log("try to connect...");
+         setTimeout(function () {
+            ku_client.TryToConnect();
+        }, 1000);
+    })
+    
+    ku_client.ClientStart("can", "ws://127.0.0.1:8081");
+
+ 
+</script>
+</html>

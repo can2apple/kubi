@@ -1,0 +1,10 @@
+
+set(jsoncpp_Found 1)
+set(jsoncpp_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/include")
+set(jsoncpp_INCLUDE_DIR ${jsoncpp_INCLUDE_DIRS})
+IF (CMAKE_BUILD_TYPE STREQUAL Debug)       
+    set(jsoncpp_LIBRARIES  ${CMAKE_CURRENT_LIST_DIR}/lib/jsoncppd.lib)
+ELSE()
+    set(jsoncpp_LIBRARIES  ${CMAKE_CURRENT_LIST_DIR}/lib/jsoncpp.lib)
+ENDIF()
+set(jsoncpp_LIBRARY ${jsoncpp_LIBRARIES})
