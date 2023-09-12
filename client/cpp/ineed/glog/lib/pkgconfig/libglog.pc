@@ -1,0 +1,10 @@
+prefix=D:/can/nav_build/lib/glog
+exec_prefix=D:/can/nav_build/lib/glog/bin
+libdir=D:/can/nav_build/lib/glog/lib
+includedir=D:/can/nav_build/lib/glog/include
+
+Name: libglog
+Description: Google Log (glog) C++ logging framework
+Version: 0.4.0
+Libs: -L${libdir} -lglog
+Cflags: -I${includedir}
