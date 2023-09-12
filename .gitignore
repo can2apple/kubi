@@ -16,6 +16,7 @@ client/unity/*.userprefs
 client/unity/*.unityproj
 client/unity/*.DS_Store
 # VS code 
-.vscode
+.vscode/
+build/
 # hidden folder for aml configs
 .git

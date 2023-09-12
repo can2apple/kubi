@@ -11,7 +11,7 @@ set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-undefined ${CMAKE_SHARED_LINKER_FLAG}")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} 
                         ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-set(INEED_LIB_DIR  "D:/can/kubi_long_time_suport/cpp_lib/win")
+set(INEED_LIB_DIR  "./ineed")
 
 if(WIN32)
     set (KITS_PAL x64)
@@ -57,7 +57,7 @@ set(Libuv_DIR ${INEED_LIB_DIR}/Libuv)
 find_package(Libuv REQUIRED CONFIG NO_DEFAULT_PATH)
 set(protobuf_DIR ${INEED_LIB_DIR}/protobuf/cmake)
 find_package(protobuf REQUIRED CONFIG NO_DEFAULT_PATH)
-#demo ÐèÒª
+#demo ï¿½ï¿½Òª
 set(OpenCV_DIR ${INEED_LIB_DIR}/opencv)
 find_package(OpenCV REQUIRED CONFIG NO_DEFAULT_PATH)
 
